@@ -1,0 +1,85 @@
+/* ============================================================
+   SALES ACTIVITY STYLES
+   ============================================================ */
+
+#sales-activity-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(38,51,86,0.18);
+  z-index: 9999;
+  overflow: auto;
+}
+
+.sales-activity-modal-content {
+  background: var(--white, #fff);
+  margin: 1% auto;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: var(--shadow-lg, 0 5px 15px rgba(0,0,0,0.2));
+  width: 550px;
+  max-width: 95vw;
+}
+
+.activity-form { margin-top: 15px; }
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 160px;
+}
+
+.form-group.full-width {
+  flex: 100%;
+  margin-bottom: 12px;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border, #e0e0e0);
+}
+
+/* Sales Activity column wrap in table */
+#allSalesActivitiesTableBody td:nth-child(6) {
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 200px;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .sales-activity-modal-content { padding: 15px; }
+  .form-row { gap: 10px; }
+}
+@media (max-width: 500px) {
+  .sales-activity-modal-content { width: 90vw; padding: 12px; }
+  .form-input, .form-textarea { padding: 6px 8px; font-size: 13px; }
+  .form-textarea { min-height: 70px; }
+}
