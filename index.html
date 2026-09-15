@@ -10,9 +10,10 @@
   <meta name="theme-color" content="#1976d2">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="callreport.css">
-  <link rel="stylesheet" href="salesactivity.css">
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="CSS/styles.css">
+  <link rel="stylesheet" href="CSS/callreport.css">
+  <link rel="stylesheet" href="CSS/salesactivity.css">
 </head>
 <body>
 
@@ -117,7 +118,7 @@
         </table>
       </div>
 
-      <!-- MOUNTS FOR PARTIALS -->
+      <!-- TEMPLATE MOUNTS -->
       <div id="callreport-mount"></div>
       <div id="salesactivity-mount"></div>
 
@@ -183,22 +184,22 @@
   </div>
 
   <!-- ============ SCRIPTS ============ -->
-  <script src="Config.js"></script>
+  <script src="config.js"></script>
   <script src="api.js"></script>
-  <script src="main.js"></script>
-  <script src="callreport.js"></script>
-  <script src="salesactivity.js"></script>
+  <script src="JS/main.js"></script>
+  <script src="JS/callreport.js"></script>
+  <script src="JS/salesactivity.js"></script>
 
   <script>
-    // Load HTML partials, then fire bootstrap
+    // Load HTML templates, then fire bootstrap
     Promise.all([
-      fetch('callreport.html').then(r => r.text()),
-      fetch('salesactivity.html').then(r => r.text())
+      fetch('Templates/callreport.html').then(r => r.text()),
+      fetch('Templates/salesactivity.html').then(r => r.text())
     ]).then(([cr, sa]) => {
       document.getElementById('callreport-mount').innerHTML = cr;
       document.getElementById('salesactivity-mount').innerHTML = sa;
       document.dispatchEvent(new Event('partialsLoaded'));
-    }).catch(err => console.error('Partial load failed:', err));
+    }).catch(err => console.error('Template load failed:', err));
   </script>
 
 </body>
