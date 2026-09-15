@@ -3,77 +3,19 @@
  * UNIFIED API LAYER
  * ============================================================
  * Provides a consistent interface for client-server communication
- * Supports both Apps Script native and REST/fetch
+ * Uses Google Apps Script native methods (deployed web app)
+ * Avoids CORS issues by using google.script.run
  */
 
 (function () {
   const cfg = window.APP_CONFIG || {};
-  const API_URL = (cfg.API_URL || "").replace(/\/+$/, ""); // strip trailing slash
-  const TIMEOUT = cfg.REQUEST_TIMEOUT_MS || 30000;
   const DEBUG = !!cfg.DEBUG;
 
-  // ---------- Transport: Apps Script ----------
+  // ---------- Transport: Apps Script Native ----------
+  // This is the primary & only method when deployed as Apps Script
+  // google.script.run is available within Google Apps Script web apps
   function _gasCall(fnName, ...args) {
     return new Promise((resolve, reject) => {
-      google.script.run
-        .withSuccessHandler(resolve)
-        .withFailureHandler(reject)
-        [fnName](...args);
-    });
-  }
-
-  // ---------- Transport: REST / fetch ----------
-  function _fetchCall(fnName, ...args) {
-    const url = API_URL;
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), TIMEOUT);
-
-    if (DEBUG) console.log(`[api] POST ${url} fn=${fnName}`, args);
-
-    return fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ fn: fnName, args: args }),
-      signal: controller.signal,
-      redirect: "follow"
-    })
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status} on ${fnName}`);
-        return res.json();
-      })
-      .then(json => {
-        if (json && json.ok === false) throw new Error(json.error || "API error");
-        return json && "data" in json ? json.data : json;
-      })
-      .finally(() => clearTimeout(timer));
-  }
-
-  // ---------- Unified dispatcher ----------
-  function _call(fnName, ...args) {
-    return API_URL ? _fetchCall(fnName, ...args) : _gasCall(fnName, ...args);
-  }
-
-  // ---------- Public API ----------
-  window.api = {
-    // Loans
-    getLoanData: () => _call("getLoanData"),
-    getPARValue: () => _call("getPARValue"),
-
-    // Call Reports
-    saveCallReport: (data) => _call("saveCallReport", data),
-    getCallReportData: () => _call("getCallReportData"),
-
-    // Users
-    saveUser: (data) => _call("saveUser", data),
-    getUserList: () => _call("getUserList"),
-    loginUser: (creds) => _call("loginUser", creds),
-
-    // Excel Import
-    importExcelToSheet: (b64, name) => _call("importExcelToSheet", b64, name),
-    getLastUploadDate: () => _call("getLastUploadDate"),
-
-    // Sales Activities
-    saveSalesActivityToSheet: (data) => _call("saveSalesActivityToSheet", data),
-    getAllSalesActivities: () => _call("getAllSalesActivities")
-  };
-})();
+      try {
+        google.script.run
+          .withSuccessHandler(resolve)\n          .withFailureHandler(reject)\n          [fnName](...args);\n      } catch (err) {\n        reject(new Error('Apps Script Error: ' + err.message));\n      }\n    });\n  }\n\n  // ---------- Unified dispatcher ----------\n  function _call(fnName, ...args) {\n    if (DEBUG) console.log(`[api] Calling ${fnName}`, args);\n    return _gasCall(fnName, ...args);\n  }\n\n  // ---------- Public API ----------\n  window.api = {\n    // Loans\n    getLoanData: () => _call(\"getLoanData\"),\n    getPARValue: () => _call(\"getPARValue\"),\n\n    // Call Reports\n    saveCallReport: (data) => _call(\"saveCallReport\", data),\n    getCallReportData: () => _call(\"getCallReportData\"),\n\n    // Users\n    saveUser: (data) => _call(\"saveUser\", data),\n    getUserList: () => _call(\"getUserList\"),\n    loginUser: (creds) => _call(\"loginUser\", creds),\n\n    // Excel Import\n    importExcelToSheet: (b64, name) => _call(\"importExcelToSheet\", b64, name),\n    getLastUploadDate: () => _call(\"getLastUploadDate\"),\n\n    // Sales Activities\n    saveSalesActivityToSheet: (data) => _call(\"saveSalesActivityToSheet\", data),\n    getAllSalesActivities: () => _call(\"getAllSalesActivities\")\n  };\n})();
