@@ -1,0 +1,192 @@
+<!-- ============ ALL CALL REPORTS VIEW ============ -->
+<div id="allCallReportsContainer" class="content" style="display:none;">
+  <h2 class="table-title">All Call Reports</h2>
+  <div class="filter-bar">
+    <label>Date Range:</label>
+    <input type="date" id="callReportStartDate">
+    <span>to</span>
+    <input type="date" id="callReportEndDate">
+    <label for="callReportOfficerFilter">Credit Officer:</label>
+    <select id="callReportOfficerFilter">
+      <option value="">All Officers</option>
+    </select>
+    <button onclick="filterAllCallReports()" class="filter-btn">Filter</button>
+    <button onclick="resetCallReportFilters()" class="filter-btn">Reset</button>
+  </div>
+  <div class="modal-table-wrapper">
+    <table class="call-report-table">
+      <thead>
+        <tr>
+          <th>Loan Number</th>
+          <th>Name of Borrower</th>
+          <th>Principal Arrears</th>
+          <th>Interest Arrears</th>
+          <th>Penalty</th>
+          <th>Date &amp; Time</th>
+          <th>Customer Feedback</th>
+          <th>Action Taken</th>
+          <th>Credit Officer</th>
+        </tr>
+      </thead>
+      <tbody id="allCallReportsTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============ FOLLOW UP MODAL ============ -->
+<div id="followup-modal" class="modal">
+  <div class="modal-content followup-modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Follow Up Comment</h2>
+      <div class="modal-actions">
+        <span class="modal-close" onclick="closeFollowUpModal()" title="Close">&times;</span>
+      </div>
+    </div>
+
+    <div class="report-summary">
+      <div class="report-summary-row">
+        <div class="report-summary-item">
+          <label>Loan Number</label>
+          <span id="modal-loan-number" class="highlight-value"></span>
+        </div>
+        <div class="report-summary-item">
+          <label>Borrower Name</label>
+          <span id="modal-borrower-name" class="highlight-value"></span>
+        </div>
+        <div class="report-summary-item">
+          <label>Credit Officer</label>
+          <span id="modal-credit-officer" class="highlight-value"></span>
+        </div>
+      </div>
+      <div class="report-summary-row">
+        <div class="report-summary-item">
+          <label>Principal Arrears</label>
+          <span id="modal-principal-arrears" class="highlight-value red"></span>
+        </div>
+        <div class="report-summary-item">
+          <label>Interest Arrears</label>
+          <span id="modal-interest-arrears" class="highlight-value red"></span>
+        </div>
+        <div class="report-summary-item">
+          <label>Penalty</label>
+          <span id="modal-penalty" class="highlight-value red"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h3 class="section-title">Customer Feedback</h3>
+      <textarea id="modal-feedback" class="report-textarea" placeholder="Enter detailed customer feedback..."></textarea>
+    </div>
+
+    <div class="report-section">
+      <h3 class="section-title">Action Taken</h3>
+      <textarea id="modal-action" class="report-textarea" placeholder="Describe the action taken..."></textarea>
+    </div>
+
+    <div class="report-footer">
+      <button class="modal-save-btn" onclick="saveFollowUpComment()">
+        <i class="material-icons">save</i> Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REPORT DETAILS MODAL ============ -->
+<div id="reportDetailsModal" class="modal">
+  <div class="modal-content report-details-modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Call Report Details</h2>
+      <span class="modal-close" onclick="closeReportDetailsModal()" title="Close">&times;</span>
+    </div>
+
+    <div class="report-summary">
+      <div class="report-summary-row">
+        <div class="report-summary-item">
+          <label>Loan Number</label>
+          <span id="report-details-loan-number" class="highlight-value"></span>
+        </div>
+        <div class="report-summary-item">
+          <label>Borrower Name</label>
+          <span id="report-details-borrower" class="highlight-value"></span>
+        </div>
+        <div class="report-summary-item">
+          <label>Report Date</label>
+          <span id="report-details-date" class="highlight-value"></span>
+        </div>
+      </div>
+      <div class="report-summary-row">
+        <div class="report-summary-item">
+          <label>Principal Arrears</label>
+          <span id="report-details-principal" class="highlight-value red"></span>
+        </div>
+        <div class="report-summary-item">
+          <label>Interest Arrears</label>
+          <span id="report-details-interest" class="highlight-value red"></span>
+        </div>
+        <div class="report-summary-item">
+          <label>Penalty</label>
+          <span id="report-details-penalty" class="highlight-value red"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h3 class="section-title">Customer Feedback</h3>
+      <div class="report-content" id="report-details-feedback"></div>
+    </div>
+
+    <div class="report-section">
+      <h3 class="section-title">Action Taken</h3>
+      <div class="report-content" id="report-details-action"></div>
+    </div>
+
+    <div class="signature-section">
+      <div class="signature-field">
+        <label>Credit Officer:</label>
+        <span id="report-details-credit-officer" class="highlight-value"></span>
+      </div>
+      <div class="signature-line">
+        <label>Signature:</label>
+        <div class="signature-space">........................................</div>
+      </div>
+    </div>
+
+    <div class="modal-actions-bottom">
+      <button class="print-btn" onclick="printReportDetails()">
+        <i class="material-icons">print</i> Print Report
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CALL REPORT MODAL ============ -->
+<div id="callReportModal" class="modal">
+  <div class="modal-content call-report-modal-content">
+    <h2 class="modal-title">CALL REPORTS</h2>
+    <span class="modal-close" onclick="closeCallReportModal()" title="Close">&times;</span>
+    <div style="text-align:right; margin-bottom: 10px;">
+      <button class="print-btn" onclick="printCallReportModal()">
+        <i class="material-icons">print</i> Print Table
+      </button>
+    </div>
+    <div class="modal-table-wrapper" id="callReportTableWrapper">
+      <table class="call-report-table">
+        <thead>
+          <tr>
+            <th>Loan Number</th>
+            <th>Name of Borrower</th>
+            <th>Principal Arrears</th>
+            <th>Interest Arrears</th>
+            <th>Penalty</th>
+            <th>Date &amp; Time</th>
+            <th>Customer Feedback</th>
+            <th>Action Taken</th>
+            <th>View</th>
+          </tr>
+        </thead>
+        <tbody id="callReportTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
