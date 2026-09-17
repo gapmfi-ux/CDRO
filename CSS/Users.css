@@ -1,0 +1,439 @@
+/* ============================================================
+   User Management Styles
+   ============================================================ */
+
+/* ---------- Add User Modal ---------- */
+.add-user-modal-content {
+  max-width: 460px;
+  width: 95vw;
+}
+
+#addUserForm label {
+  display: block;
+  font-weight: 500;
+  margin-top: 16px;
+  margin-bottom: 6px;
+  color: #222;
+  font-size: 0.92em;
+}
+
+#addUserForm input,
+#addUserForm select {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: 5px;
+  background: #fafbfc;
+  font-size: 0.95rem;
+  font-family: inherit;
+  margin-top: 4px;
+  transition: border-color 0.16s, background 0.16s;
+}
+
+#addUserForm input:focus,
+#addUserForm select:focus {
+  border-color: var(--primary, #1976d2);
+  background: #fff;
+  outline: none;
+}
+
+/* ---------- User List Modal ---------- */
+.userlist-modal-content {
+  max-width: 900px;
+  width: 95vw;
+}
+
+.userlist-toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.userlist-toolbar input[type="text"] {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: 5px;
+  font-size: 0.95em;
+  background: #fafbfc;
+}
+
+.userlist-toolbar input[type="text"]:focus {
+  border-color: var(--primary, #1976d2);
+  background: #fff;
+  outline: none;
+}
+
+.userlist-table-wrapper {
+  max-height: 60vh;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(38, 51, 86, 0.06);
+  background: #fff;
+  border: 1px solid #eef2f7;
+}
+
+.userlist-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+  background: #fff;
+}
+
+.userlist-table th,
+.userlist-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border, #e0e0e0);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.userlist-table th {
+  background: #f7fafc;
+  font-weight: 600;
+  color: #263356;
+  font-size: 13.5px;
+  letter-spacing: 0.02em;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-bottom: 2px solid #e3e9f0;
+}
+
+.userlist-table tr:last-child td {
+  border-bottom: none;
+}
+
+.userlist-table tr:hover td {
+  background: #f8fbff;
+}
+
+/* Number column */
+.userlist-table td:first-child,
+.userlist-table th:first-child {
+  width: 44px;
+  text-align: center;
+  color: #b0b0b0;
+  font-weight: 500;
+}
+
+/* Officer info with initials */
+.officer-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.officer-initials {
+  background: linear-gradient(90deg, #1976d2 60%, #0d47a1 100%);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85em;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+.officer-name {
+  font-weight: 500;
+  color: #222;
+}
+
+/* Username styling */
+.user-username {
+  color: #1976d2;
+  font-weight: 600;
+  font-family: 'Roboto Mono', 'Courier New', monospace;
+  font-size: 0.92em;
+  background: #e3f2fd;
+  border-radius: 4px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+/* Email column */
+.userlist-table td.user-email {
+  color: #475569;
+  font-size: 0.9em;
+  word-break: break-all;
+  max-width: 180px;
+}
+
+.userlist-table td.user-email.empty {
+  color: #b0b0b0;
+  font-style: italic;
+}
+
+/* Password column */
+.password-column {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+  color: #888;
+  text-align: center;
+}
+
+/* Role badge */
+.role-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 1em;
+  font-size: 0.85em;
+  font-weight: 600;
+  background: #e3f2fd;
+  color: #1976d2;
+  border: 1px solid #bbdefb;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.role-badge.role-admin {
+  background: #ffe0b2;
+  color: #e65100;
+  border: 1px solid #ffcc80;
+}
+
+.role-badge.role-manager {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.role-badge.role-officer {
+  background: #e3f2fd;
+  color: #1976d2;
+  border: 1px solid #bbdefb;
+}
+
+/* Actions column */
+.userlist-table td:last-child,
+.userlist-table th:last-child {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.userlist-table button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: none;
+  font-size: 0.85em;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 0 3px;
+  transition: background 0.14s, color 0.14s, box-shadow 0.16s;
+  background: #f3f3f3;
+  color: #1976d2;
+  outline: none;
+}
+
+.userlist-table button .material-icons {
+  font-size: 1.1em;
+}
+
+.userlist-table button.reset-btn {
+  background: var(--primary, #1976d2);
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(25, 118, 210, 0.08);
+}
+
+.userlist-table button.reset-btn:hover {
+  background: var(--primary-dark, #0d47a1);
+}
+
+.userlist-table button.remove-btn {
+  background: var(--danger-light, #ffebee);
+  color: var(--danger, #c62828);
+  border: 1px solid var(--danger, #c62828);
+}
+
+.userlist-table button.remove-btn:hover {
+  background: var(--danger, #c62828);
+  color: #fff;
+}
+
+.userlist-table button:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* User list footer */
+.userlist-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 6px;
+}
+
+.userlist-count {
+  color: #64748b;
+  font-size: 0.9em;
+}
+
+/* ---------- Reset Password Modal ---------- */
+.reset-password-modal-content {
+  max-width: 420px;
+  width: 95vw;
+}
+
+.reset-info {
+  margin-bottom: 18px;
+  color: #475569;
+  font-size: 0.95em;
+}
+
+.reset-info strong {
+  color: #1976d2;
+}
+
+#resetPasswordModal label {
+  display: block;
+  font-weight: 500;
+  margin-top: 14px;
+  margin-bottom: 4px;
+  color: #222;
+  font-size: 0.92em;
+}
+
+#resetPasswordModal input {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: 5px;
+  background: #fafbfc;
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
+#resetPasswordModal input:focus {
+  border-color: var(--primary, #1976d2);
+  background: #fff;
+  outline: none;
+}
+
+.reset-error {
+  color: var(--danger, #c62828);
+  font-size: 0.9em;
+  margin-top: 10px;
+  min-height: 1.2em;
+}
+
+/* ---------- Confirm Delete Modal ---------- */
+.confirm-modal-content {
+  max-width: 420px;
+  width: 95vw;
+}
+
+.confirm-info {
+  margin-bottom: 20px;
+  color: #475569;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+.confirm-info strong {
+  color: #c62828;
+}
+
+/* ---------- Shared Buttons ---------- */
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border-radius: 5px;
+  font-size: 0.95em;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+
+.btn-primary {
+  background: var(--primary, #1976d2);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark, #0d47a1);
+}
+
+.btn-primary:disabled {
+  background: #c7d3e3;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #eef2f7;
+  color: #475569;
+  border: 1px solid #d6dfe9;
+}
+
+.btn-secondary:hover {
+  background: #dde5ee;
+  color: #263356;
+}
+
+.btn-danger {
+  background: var(--danger, #c62828);
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background: #8e1c1c;
+}
+
+/* ---------- Modal actions row ---------- */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 700px) {
+  .userlist-table th,
+  .userlist-table td {
+    font-size: 12px;
+    padding: 9px 8px;
+  }
+  .officer-initials {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75em;
+  }
+  .userlist-table td.user-email {
+    display: none;
+  }
+  .userlist-table th:nth-child(5) {
+    display: none;
+  }
+  .userlist-table button {
+    padding: 5px 8px;
+    font-size: 0.75em;
+  }
+}
+
+@media (max-width: 480px) {
+  .userlist-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .userlist-toolbar button {
+    justify-content: center;
+  }
+}
