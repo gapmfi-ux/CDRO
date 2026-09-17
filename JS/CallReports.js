@@ -17,6 +17,7 @@ function openFollowUpModal(row) {
   document.getElementById('modal-action').value   = '';
   document.getElementById('followup-modal').style.display = 'block';
 }
+
 function closeFollowUpModal() {
   document.getElementById('followup-modal').style.display = 'none';
 }
@@ -82,8 +83,8 @@ function openCallReportModal(loanNum) {
       });
       var viewTd = document.createElement('td');
       viewTd.innerHTML =
-        '<button class="view-report-btn" onclick="viewReportDetails(' +
-        JSON.stringify(row).replace(/"/g, '&quot;') + ')">' +
+        '<button class="view-report-btn" onclick=\'viewReportDetails(' +
+        JSON.stringify(row).replace(/'/g, '&#39;') + ')\'>' +
         '<i class="material-icons">visibility</i></button>';
       tr.appendChild(viewTd);
       tbody.appendChild(tr);
@@ -114,7 +115,6 @@ function showAllCallReports() {
   var container = document.getElementById('allCallReportsContainer');
   container.style.display = 'block';
 
-  // Move the inner block into the container on first view
   if (!container.dataset.populated) {
     var inner = document.getElementById('allCallReportsInner');
     if (inner) {
@@ -187,70 +187,3 @@ function resetCallReportFilters() {
   document.getElementById('callReportOfficerFilter').value = '';
   renderAllCallReportsTable(allCallReportRows);
 }
-
-// ---------- User Management (still under CallReports namespace in original) ----------
-function openAddUserModal()  { document.getElementById('addUserModal').style.display  = 'block'; }
-function closeAddUserModal() { document.getElementById('addUserModal').style.display  = 'none';  }
-function openUserListModal() {
-  document.getElementById('userListModal').style.display = 'block';
-  loadUserList();
-}
-function closeUserListModal() { document.getElementById('userListModal').style.display = 'none'; }
-
-document.addEventListener('DOMContentLoaded', function () {
-  var form = document.getElementById('addUserForm');
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var data = {
-        creditOfficerName: form.creditOfficerName.value,
-        username:          form.username.value,
-        defaultPassword:   form.defaultPassword.value,
-        userRole:          form.userRole.value
-      };
-      Api.saveUser(data)
-        .then(function (msg) { alert(msg); closeAddUserModal(); })
-        .catch(function (err) { alert('Error: ' + err.message); });
-    });
-  }
-});
-
-function loadUserList() {
-  Api.getUserList().then(function (users) {
-    var tbody = document.getElementById('userListTableBody');
-    tbody.innerHTML = '';
-
-    if (!users || users.length === 0) {
-      showNoDataMessage(tbody, 6, 'No users found.');
-      return;
-    }
-
-    users.forEach(function (u) {
-      var initials = (u.creditOfficer || '').split(' ').map(function (w) {
-        return w[0];
-      }).join('').toUpperCase();
-
-      var tr = document.createElement('tr');
-      tr.innerHTML =
-        '<td>' + u.number + '</td>' +
-        '<td><div class="officer-info">' +
-          '<span class="officer-initials">' + initials + '</span>' +
-          '<span class="officer-name">' + escapeHtml(u.creditOfficer) + '</span>' +
-        '</div></td>' +
-        '<td><span class="user-username">' + escapeHtml(u.username) + '</span></td>' +
-        '<td class="password-column">********</td>' +
-        '<td><span class="role-badge role-' + (u.role || '').toLowerCase() + '">' +
-          escapeHtml(u.role) + '</span></td>' +
-        '<td style="text-align:center;">' +
-          '<button class="reset-btn" onclick="resetPassword(\'' + u.username + '\')">' +
-            '<span class="material-icons">refresh</span> Reset</button>' +
-          '<button class="remove-btn" onclick="removeUser(\'' + u.username + '\')">' +
-            '<span class="material-icons">delete</span> Remove</button>' +
-        '</td>';
-      tbody.appendChild(tr);
-    });
-  });
-}
-
-function resetPassword(u) { alert('Reset password for ' + u + ' (not implemented in backend).'); }
-function removeUser(u)    { alert('Remove user ' + u + ' (not implemented in backend).'); }
