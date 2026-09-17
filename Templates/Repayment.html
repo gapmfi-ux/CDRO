@@ -1,0 +1,29 @@
+<div id="repaymentInner" style="display:none;">
+  <h2 class="table-title">Expected Repayments</h2>
+
+  <div class="filter-bar">
+    <label>Next Payment Date:</label>
+    <input type="date" id="repaymentStartDate" />
+    <span>to</span>
+    <input type="date" id="repaymentEndDate" />
+    <label>Credit Officer:</label>
+    <select id="repaymentOfficerFilter">
+      <option value="">All Officers</option>
+    </select>
+    <button class="filter-btn" onclick="filterRepayments()">Filter</button>
+    <button class="filter-btn" onclick="resetRepaymentFilters()">Reset</button>
+  </div>
+
+  <div class="modal-table-wrapper">
+    <table class="call-report-table">
+      <thead>
+        <tr>
+          <th>Customer Name</th><th>Account No.</th><th>Loan Product</th>
+          <th>Next Payment Date</th><th>Monthly Principal</th>
+          <th>Monthly Interest</th><th>Total Monthly Repayment</th>
+        </tr>
+      </thead>
+      <tbody id="repaymentTableBody"></tbody>
+    </table>
+  </div>
+</div>
