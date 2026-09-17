@@ -15,3 +15,4 @@ window.APP_CONFIG = {
   REQUEST_TIMEOUT_MS: 30000,
   DEBUG: true
 };
+
