@@ -1,0 +1,20 @@
+{
+  "name": "CREDIT OPERATIONS",
+  "short_name": "CreditOps",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#1976d2",
+  "theme_color": "#1976d2",
+  "icons": [
+    {
+      "src": "https://i.ibb.co/Fbzd5Lwz/Chat-GPT-Image-Jul-28-2025-09-26-08-AM.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://i.ibb.co/Fbzd5Lwz/Chat-GPT-Image-Jul-28-2025-09-26-08-AM.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
