@@ -1,42 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <base target="_top">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CREDIT OPERATIONS</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="icon" type="image/png" sizes="192x192" href="https://i.ibb.co/Fbzd5Lwz/Chat-GPT-Image-Jul-28-2025-09-26-08-AM.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="https://i.ibb.co/Fbzd5Lwz/Chat-GPT-Image-Jul-28-2025-09-26-08-AM.png">
-  <meta name="theme-color" content="#1976d2">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1976d2" />
 
-  <!-- CSS Files -->
-  <link rel="stylesheet" href="CSS/styles.css">
-  <link rel="stylesheet" href="CSS/callreport.css">
-  <link rel="stylesheet" href="CSS/salesactivity.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="icon" type="image/png" sizes="192x192"
+        href="https://i.ibb.co/Fbzd5Lwz/Chat-GPT-Image-Jul-28-2025-09-26-08-AM.png" />
+  <link rel="icon" type="image/png" sizes="512x512"
+        href="https://i.ibb.co/Fbzd5Lwz/Chat-GPT-Image-Jul-28-2025-09-26-08-AM.png" />
+  <link rel="manifest" href="manifest.json" />
+
+  <link rel="stylesheet" href="Css/Index.css" />
+  <link rel="stylesheet" href="Css/CallReports.css" />
+  <link rel="stylesheet" href="Css/SalesActivity.css" />
+  <link rel="stylesheet" href="Css/Repayment.css" />
 </head>
 <body>
 
-  <!-- ============ LOGIN ============ -->
+  <!-- ===== LOGIN ===== -->
   <div id="loginContainer" class="login-container">
     <div class="login-box">
       <h2>CREDIT OPERATIONS</h2>
-      <input type="text" id="userName" class="login-input" placeholder="Enter username" required>
-      <input type="password" id="password" class="login-input" placeholder="Enter password" required>
-      <button onclick="login()" class="login-button">Login</button>
+      <input type="text" id="userName" class="login-input" placeholder="Enter username" required />
+      <input type="password" id="password" class="login-input" placeholder="Enter password" required />
+      <button id="loginBtn" class="login-button">Login</button>
       <div id="loginOutput" class="login-error"></div>
     </div>
   </div>
 
-  <!-- ============ MAIN LAYOUT ============ -->
-  <div class="main-layout" style="display:none;">
+  <!-- ===== MAIN APP ===== -->
+  <div class="main-layout" id="mainLayout" style="display:none;">
+
+    <!-- SIDEBAR -->
     <div class="sidebar">
       <div class="sidebar__title">Menu</div>
       <ul class="sidebar__nav">
         <li class="sidebar-dropdown">
-          <button class="sidebar-btn" onclick="toggleSidebarDropdown(event, 0)">
+          <button class="sidebar-btn" data-dropdown="0">
             Call Reports <span class="dropdown-arrow">▼</span>
           </button>
-          <div class="sidebar-dropdown-content" id="sidebar-dropdown-content-0">
+          <div class="sidebar-dropdown-content" id="sidebar-dropdown-0">
             <a href="#" onclick="showAllReports(); return false;">All Reports</a>
             <a href="#" onclick="showMyReports(); return false;">My Reports</a>
             <a href="#" onclick="showAllCallReports(); return false;">All Call Reports</a>
@@ -44,21 +50,30 @@
         </li>
 
         <li class="sidebar-dropdown">
-          <button class="sidebar-btn" onclick="toggleSidebarDropdown(event, 1)">
+          <button class="sidebar-btn" data-dropdown="1">
             Sales Activity <span class="dropdown-arrow">▼</span>
           </button>
-          <div class="sidebar-dropdown-content" id="sidebar-dropdown-content-1">
+          <div class="sidebar-dropdown-content" id="sidebar-dropdown-1">
             <a href="#" onclick="openSalesActivityModal(); return false;">Add Sales Activity</a>
             <a href="#" onclick="showMySalesReports(); return false;">My Sales Reports</a>
             <a href="#" onclick="showAllSalesReports(); return false;">All Sales Reports</a>
           </div>
         </li>
 
-        <li class="sidebar-dropdown" id="manageUsersSidebar">
-          <button class="sidebar-btn" onclick="toggleSidebarDropdown(event, 2)">
+        <li class="sidebar-dropdown">
+          <button class="sidebar-btn" data-dropdown="3">
+            Repayment <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="sidebar-dropdown-content" id="sidebar-dropdown-3">
+            <a href="#" onclick="showRepayment(); return false;">Expected Repayments</a>
+          </div>
+        </li>
+
+        <li class="sidebar-dropdown" id="manageUsersSidebar" style="display:none;">
+          <button class="sidebar-btn" data-dropdown="2">
             Manage Users <span class="dropdown-arrow">▼</span>
           </button>
-          <div class="sidebar-dropdown-content" id="sidebar-dropdown-content-2">
+          <div class="sidebar-dropdown-content" id="sidebar-dropdown-2">
             <a href="#" onclick="openAddUserModal(); return false;">Add User</a>
             <a href="#" onclick="openUserListModal(); return false;">User List</a>
           </div>
@@ -66,36 +81,45 @@
       </ul>
     </div>
 
+    <!-- MAIN CONTENT -->
     <div class="main-content">
+
       <!-- TOP BAR -->
       <div class="top-bar">
-        <div class="top-bar__center">
-          <span class="top-bar__title">CREDIT OPERATIONS</span>
-        </div>
         <div class="top-bar__left">
-          <button class="top-bar__btn" onclick="document.getElementById('excelUploadInput').click();">Upload Data</button>
-          <input type="file" id="excelUploadInput" accept=".xlsx, .xls" style="display:none;" onchange="handleExcelUpload(event)">
+          <button class="top-bar__btn"
+                  onclick="document.getElementById('excelUploadInput').click();">
+            Upload Data
+          </button>
+          <input type="file" id="excelUploadInput" accept=".xlsx, .xls"
+                 style="display:none;" onchange="handleExcelUpload(event)" />
           <span id="lastUploadDate">Last Upload: --</span>
         </div>
+        <div class="top-bar__center">
+          <span style="font-size:1.5em; font-weight:bold;">CREDIT OPERATIONS</span>
+        </div>
         <div class="top-bar__right">
-          <button class="user-menu-btn">👤</button>
+          <button class="user-menu-btn" onclick="logout()" title="Logout">👤</button>
         </div>
       </div>
 
-      <!-- MAIN LOAN TABLE VIEW -->
-      <div class="content" id="mainLoanView">
-        <div class="title-row">
-          <h2 class="table-title">Overdue Loans Report</h2>
-          <span class="par-badge">
+      <!-- LOANS VIEW (default) -->
+      <div class="content" id="loanView">
+        <div style="display:flex; align-items:center; gap:15px; margin-bottom:12px;">
+          <h2 class="table-title" style="margin:0;">Overdue Loans Report</h2>
+          <span style="background:#e3f2fd; color:#1976d2; font-weight:bold;
+                       border-radius:4px; padding:4px 12px; font-size:1.0em;">
             PAR: <span id="par-value" title="Portfolio At Risk"></span>
           </span>
         </div>
+
         <div class="filter-bar">
           <label for="creditOfficerFilter">Report by:</label>
           <select id="creditOfficerFilter" onchange="filterLoanTableByOfficer()">
             <option value="">All Credit Officers</option>
           </select>
         </div>
+
         <table class="loan-table">
           <thead>
             <tr>
@@ -117,88 +141,50 @@
         </table>
       </div>
 
-      <!-- TEMPLATE MOUNTS -->
-      <div id="callreport-mount"></div>
-      <div id="salesactivity-mount"></div>
+      <!-- ALL CALL REPORTS VIEW (injected from Templates/CallReports.html) -->
+      <div id="allCallReportsContainer" class="content" style="display:none;"></div>
 
-      <!-- ADD USER MODAL -->
-      <div class="modal" id="addUserModal">
-        <div class="modal-content" style="max-width:400px;">
-          <button class="modal-close" onclick="closeAddUserModal()">&times;</button>
-          <h2>Add User</h2>
-          <form id="addUserForm">
-            <label>Credit Officer Name: <input type="text" name="creditOfficerName" required></label>
-            <label>Username: <input type="text" name="username" required></label>
-            <label>Default Password: <input type="password" name="defaultPassword" required></label>
-            <label>User Role:
-              <select name="userRole" required>
-                <option value="">Select role</option>
-                <option value="Admin">Admin</option>
-                <option value="Officer">Officer</option>
-              </select>
-            </label>
-            <div class="modal-actions">
-              <button type="submit">Save</button>
-              <button type="button" onclick="closeAddUserModal()">Cancel</button>
-            </div>
-          </form>
-        </div>
-      </div>
+      <!-- ALL SALES VIEW (injected from Templates/SalesActivity.html) -->
+      <div id="allSalesActivitiesContainer" class="content" style="display:none;"></div>
 
-      <!-- USER LIST MODAL -->
-      <div class="modal" id="userListModal">
-        <div class="modal-content" style="max-width:700px;">
-          <button class="modal-close" onclick="closeUserListModal()">&times;</button>
-          <h2>User List</h2>
-          <div class="userlist-table-wrapper">
-            <table class="userlist-table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Credit Officer</th>
-                  <th>Username</th>
-                  <th>Password</th>
-                  <th>Role</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="userListTableBody"></tbody>
-            </table>
-          </div>
-          <div class="modal-actions">
-            <button type="button" onclick="closeUserListModal()">Close</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- LOADING MODAL -->
-      <div id="loadingModal">
-        <div class="loading-box">
-          <div id="loadingSpinner">⏳</div>
-          <div id="loadingText">Uploading, please wait...</div>
-        </div>
-      </div>
+      <!-- REPAYMENT VIEW (injected from Templates/Repayment.html) -->
+      <div id="repaymentContainer" class="content" style="display:none;"></div>
 
     </div>
   </div>
 
-  <!-- ============ SCRIPTS ============ -->
-  <script src="config.js"></script>
-  <script src="api.js"></script>
-  <script src="JS/main.js"></script>
-  <script src="JS/callreport.js"></script>
-  <script src="JS/salesactivity.js"></script>
+  <!-- MODALS injected dynamically via fetch() -->
+  <div id="modalRoot"></div>
+
+  <!-- LOADING MODAL -->
+  <div id="loadingModal" style="display:none; position:fixed; z-index:99999;
+       left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4);">
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                background:#fff; padding:2em 3em; border-radius:10px;
+                box-shadow:0 2px 16px rgba(0,0,0,0.15); text-align:center;">
+      <div style="font-size:2em; margin-bottom:1em;">⏳</div>
+      <div id="loadingText">Uploading, please wait...</div>
+    </div>
+  </div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="JS/Api.js"></script>
+  <script src="JS/CallReports.js"></script>
+  <script src="JS/SalesActivity.js"></script>
+  <script src="JS/Repayment.js"></script>
+  <script src="JS/Index.js"></script>
 
   <script>
-    // Load HTML templates, then fire bootstrap
-    Promise.all([
-      fetch('Templates/callreport.html').then(r => r.text()),
-      fetch('Templates/salesactivity.html').then(r => r.text())
-    ]).then(([cr, sa]) => {
-      document.getElementById('callreport-mount').innerHTML = cr;
-      document.getElementById('salesactivity-mount').innerHTML = sa;
-      document.dispatchEvent(new Event('partialsLoaded'));
-    }).catch(err => console.error('Template load failed:', err));
+    // Inject modals from Templates folder at startup
+    document.addEventListener('DOMContentLoaded', function () {
+      ['CallReports', 'SalesActivity', 'Repayment'].forEach(function (name) {
+        fetch('Templates/' + name + '.html')
+          .then(function (r) { return r.text(); })
+          .then(function (html) {
+            document.getElementById('modalRoot').insertAdjacentHTML('beforeend', html);
+          });
+      });
+    });
   </script>
 
 </body>
