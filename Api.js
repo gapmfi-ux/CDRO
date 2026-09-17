@@ -1,9 +1,9 @@
-// Google Apps Script Web App URL — REPLACE with your deployment
-const GAS_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+// Google Apps Script Web App URL from Config.js
+var GAS_URL = (window.APP_CONFIG && window.APP_CONFIG.GAS_URL) || '';
 
 /**
  * Call a Google Apps Script function via JSONP.
- * The GAS doGet(e) handler must return: callbackName(JSON.stringify(result));
+ * GAS doGet(e) must return: callbackName(JSON.stringify(result));
  */
 function callGAS(functionName, params) {
   params = params || {};
@@ -34,17 +34,32 @@ function callGAS(functionName, params) {
 }
 
 // ---- API Methods (mirror your Apps Script functions) ----
-const Api = {
-  loginUser:               function (c) { return callGAS('loginUser', c); },
-  getLoanData:             function ()  { return callGAS('getLoanData'); },
-  getPARValue:             function ()  { return callGAS('getPARValue'); },
-  saveCallReport:          function (d) { return callGAS('saveCallReport', d); },
-  getCallReportData:       function ()  { return callGAS('getCallReportData'); },
-  saveSalesActivity:       function (d) { return callGAS('saveSalesActivityToSheet', d); },
-  getAllSalesActivities:   function ()  { return callGAS('getAllSalesActivities'); },
-  getExpectedRepaymentData:function ()  { return callGAS('getExpectedRepaymentData'); },
-  saveUser:                function (d) { return callGAS('saveUser', d); },
-  getUserList:             function ()  { return callGAS('getUserList'); },
-  importExcel:             function (b, f) { return callGAS('importExcelToSheet', { base64: b, filename: f }); },
-  getLastUploadDate:       function ()  { return callGAS('getLastUploadDate'); }
+var Api = {
+  // Auth
+  loginUser:                function (c) { return callGAS('loginUser', c); },
+
+  // Loans
+  getLoanData:              function ()  { return callGAS('getLoanData'); },
+  getPARValue:              function ()  { return callGAS('getPARValue'); },
+
+  // Call Reports
+  saveCallReport:           function (d) { return callGAS('saveCallReport', d); },
+  getCallReportData:        function ()  { return callGAS('getCallReportData'); },
+
+  // Sales Activities
+  saveSalesActivity:        function (d) { return callGAS('saveSalesActivityToSheet', d); },
+  getAllSalesActivities:    function ()  { return callGAS('getAllSalesActivities'); },
+
+  // Repayment
+  getExpectedRepaymentData: function ()  { return callGAS('getExpectedRepaymentData'); },
+
+  // Users
+  saveUser:                 function (d) { return callGAS('saveUser', d); },
+  getUserList:              function ()  { return callGAS('getUserList'); },
+  updatePassword:           function (d) { return callGAS('updatePassword', d); },
+  deleteUser:               function (d) { return callGAS('deleteUser', d); },
+
+  // Upload
+  importExcel:              function (b, f) { return callGAS('importExcelToSheet', { base64: b, filename: f }); },
+  getLastUploadDate:        function ()  { return callGAS('getLastUploadDate'); }
 };
