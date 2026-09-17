@@ -1,0 +1,92 @@
+<div id="sales-activity-modal" class="modal" style="display:none;">
+  <div class="modal-content sales-activity-modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Add Sales Activity</h2>
+      <span class="modal-close" onclick="closeSalesActivityModal()" title="Close">&times;</span>
+    </div>
+
+    <form id="sales-activity-form" onsubmit="event.preventDefault(); saveSalesActivity();">
+      <div class="activity-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="activity-date">Date</label>
+            <input type="date" id="activity-date" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label for="destination">Destination / Area</label>
+            <select id="destination" class="form-input" required>
+              <option value="">Select Area</option>
+              <option>Accra</option><option>Osu</option>
+              <option>Abossey Okai</option><option>Kaneshie</option>
+              <option>La</option><option>Cantonment</option>
+              <option>Telephone Call</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="clients-visited">Clients Visited / Contacted</label>
+            <input type="text" id="clients-visited" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label for="transport-mode">Mode of Transport</label>
+            <select id="transport-mode" class="form-input" required>
+              <option value="">Select Transport</option>
+              <option>Company Car</option><option>Public Transport</option>
+              <option>Bolt/Uber</option><option>Not applicable</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="sales-activity">Sales Activity</label>
+          <textarea id="sales-activity" class="form-textarea" rows="3" required></textarea>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="remarks">Remarks / Outcome</label>
+          <textarea id="remarks" class="form-textarea" rows="3" required></textarea>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <button type="button" class="modal-cancel-btn" onclick="closeSalesActivityModal()">
+          <i class="material-icons">cancel</i> Cancel
+        </button>
+        <button type="submit" class="modal-save-btn">
+          <i class="material-icons">save</i> Save Activity
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- List container for sales activities -->
+<div id="allSalesInner" style="display:none;">
+  <h2 class="table-title" id="salesListTitle">Sales Activities</h2>
+  <div class="filter-bar">
+    <label>Date Range:</label>
+    <input type="date" id="salesActivityStartDate" />
+    <span>to</span>
+    <input type="date" id="salesActivityEndDate" />
+    <label>Credit Officer:</label>
+    <select id="salesActivityOfficerFilter">
+      <option value="">All Officers</option>
+    </select>
+    <button class="filter-btn" onclick="filterSalesActivities()">Filter</button>
+    <button class="filter-btn" onclick="resetSalesActivityFilters()">Reset</button>
+  </div>
+  <div class="modal-table-wrapper">
+    <table class="call-report-table">
+      <thead>
+        <tr>
+          <th>Date</th><th>Credit Officer</th><th>Destination/Area</th>
+          <th>Clients Visited</th><th>Transport Mode</th>
+          <th>Sales Activity</th><th>Remarks/Outcome</th>
+        </tr>
+      </thead>
+      <tbody id="allSalesActivitiesTableBody"></tbody>
+    </table>
+  </div>
+</div>
