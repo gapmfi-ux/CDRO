@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="Css/CallReports.css" />
   <link rel="stylesheet" href="Css/SalesActivity.css" />
   <link rel="stylesheet" href="Css/Repayment.css" />
+  <link rel="stylesheet" href="Css/Users.css" />
 </head>
 <body>
 
@@ -141,19 +142,15 @@
         </table>
       </div>
 
-      <!-- ALL CALL REPORTS VIEW (injected from Templates/CallReports.html) -->
+      <!-- Injected containers -->
       <div id="allCallReportsContainer" class="content" style="display:none;"></div>
-
-      <!-- ALL SALES VIEW (injected from Templates/SalesActivity.html) -->
       <div id="allSalesActivitiesContainer" class="content" style="display:none;"></div>
-
-      <!-- REPAYMENT VIEW (injected from Templates/Repayment.html) -->
       <div id="repaymentContainer" class="content" style="display:none;"></div>
 
     </div>
   </div>
 
-  <!-- MODALS injected dynamically via fetch() -->
+  <!-- MODALS injected dynamically -->
   <div id="modalRoot"></div>
 
   <!-- LOADING MODAL -->
@@ -168,16 +165,18 @@
   </div>
 
   <!-- ===== SCRIPTS ===== -->
+  <script src="Config.js"></script>
   <script src="JS/Api.js"></script>
   <script src="JS/CallReports.js"></script>
   <script src="JS/SalesActivity.js"></script>
   <script src="JS/Repayment.js"></script>
+  <script src="JS/Users.js"></script>
   <script src="JS/Index.js"></script>
 
   <script>
     // Inject modals from Templates folder at startup
     document.addEventListener('DOMContentLoaded', function () {
-      ['CallReports', 'SalesActivity', 'Repayment'].forEach(function (name) {
+      ['CallReports', 'SalesActivity', 'Repayment', 'Users'].forEach(function (name) {
         fetch('Templates/' + name + '.html')
           .then(function (r) { return r.text(); })
           .then(function (html) {
