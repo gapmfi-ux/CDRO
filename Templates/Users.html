@@ -1,0 +1,161 @@
+<!-- ================= Add User Modal ================= -->
+<div class="modal" id="addUserModal" style="display:none;">
+  <div class="modal-content add-user-modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Add User</h2>
+      <span class="modal-close" onclick="closeAddUserModal()" title="Close">&times;</span>
+    </div>
+
+    <form id="addUserForm" autocomplete="off">
+      <label>
+        Credit Officer Name
+        <input type="text" name="creditOfficerName" required
+               placeholder="e.g. Jane Smith" />
+      </label>
+
+      <label>
+        Username
+        <input type="text" name="username" required
+               placeholder="e.g. jsmith" autocomplete="off" />
+      </label>
+
+      <label>
+        Default Password
+        <input type="password" name="defaultPassword" required
+               placeholder="Enter default password" autocomplete="new-password" />
+      </label>
+
+      <label>
+        Email (for notifications)
+        <input type="email" name="email"
+               placeholder="officer@company.com" />
+      </label>
+
+      <label>
+        User Role
+        <select name="userRole" required>
+          <option value="">Select role</option>
+          <option value="Admin">Admin</option>
+          <option value="Manager">Manager</option>
+          <option value="Officer">Officer</option>
+        </select>
+      </label>
+
+      <div class="modal-actions">
+        <button type="submit" class="btn-primary" id="addUserSaveBtn">
+          <i class="material-icons">save</i> Save
+        </button>
+        <button type="button" class="btn-secondary" onclick="closeAddUserModal()">
+          <i class="material-icons">cancel</i> Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= User List Modal ================= -->
+<div class="modal" id="userListModal" style="display:none;">
+  <div class="modal-content userlist-modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">User List</h2>
+      <span class="modal-close" onclick="closeUserListModal()" title="Close">&times;</span>
+    </div>
+
+    <div class="userlist-toolbar">
+      <input type="text" id="userSearchInput"
+             placeholder="Search by officer, username or role..."
+             oninput="filterUserList()" />
+      <button class="btn-secondary" onclick="loadUserList()">
+        <i class="material-icons">refresh</i> Refresh
+      </button>
+    </div>
+
+    <div class="userlist-table-wrapper">
+      <table class="userlist-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Credit Officer</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th style="text-align:center;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="userListTableBody">
+          <!-- Populated by JS/Users.js -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="userlist-footer">
+      <span id="userListCount" class="userlist-count">0 users</span>
+      <button type="button" class="btn-secondary" onclick="closeUserListModal()">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= Reset Password Modal ================= -->
+<div class="modal" id="resetPasswordModal" style="display:none;">
+  <div class="modal-content reset-password-modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Reset Password</h2>
+      <span class="modal-close" onclick="closeResetPasswordModal()" title="Close">&times;</span>
+    </div>
+
+    <p class="reset-info">
+      Reset password for <strong id="resetTargetUser"></strong>
+    </p>
+
+    <label>
+      New Password
+      <input type="password" id="newPasswordInput"
+             placeholder="Enter new password" autocomplete="new-password" />
+    </label>
+
+    <label>
+      Confirm Password
+      <input type="password" id="confirmPasswordInput"
+             placeholder="Re-enter new password" autocomplete="new-password" />
+    </label>
+
+    <div id="resetPasswordError" class="reset-error"></div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-primary" onclick="submitResetPassword()">
+        <i class="material-icons">lock_reset</i> Reset
+      </button>
+      <button type="button" class="btn-secondary" onclick="closeResetPasswordModal()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= Confirm Delete Modal ================= -->
+<div class="modal" id="confirmDeleteModal" style="display:none;">
+  <div class="modal-content confirm-modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Remove User</h2>
+      <span class="modal-close" onclick="closeConfirmDeleteModal()" title="Close">&times;</span>
+    </div>
+
+    <p class="confirm-info">
+      Are you sure you want to remove
+      <strong id="confirmDeleteUsername"></strong>?
+      This action cannot be undone.
+    </p>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-danger" onclick="confirmRemoveUser()">
+        <i class="material-icons">delete</i> Remove
+      </button>
+      <button type="button" class="btn-secondary" onclick="closeConfirmDeleteModal()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
