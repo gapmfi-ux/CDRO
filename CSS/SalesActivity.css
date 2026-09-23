@@ -5,32 +5,33 @@
 #sales-activity-modal {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(38,51,86,0.18);
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
   z-index: 9999;
   overflow: auto;
+  backdrop-filter: blur(2px);
 }
 
 .sales-activity-modal-content {
-  background: var(--white, #fff);
-  margin: 1% auto;
-  padding: 20px;
-  border-radius: 6px;
-  box-shadow: var(--shadow-lg, 0 5px 15px rgba(0,0,0,0.2));
-  width: 550px;
-  max-width: 95vw;
+  background: var(--surface);
+  margin: 3vh auto;
+  padding: 26px 28px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  width: 580px;
+  max-width: 96vw;
+  animation: popIn 0.22s var(--ease);
 }
 
-.activity-form { margin-top: 15px; }
+.activity-form {
+  margin-top: 16px;
+}
 
 .form-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 14px;
+  margin-bottom: 14px;
 }
 
 .form-group {
@@ -40,20 +41,43 @@
 
 .form-group.full-width {
   flex: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
 }
 
 .form-input,
 .form-textarea {
   width: 100%;
-  padding: 8px 10px;
-  border: 1px solid var(--border, #e0e0e0);
-  border-radius: 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
   font-size: 14px;
+  font-family: inherit;
+  background: var(--surface-2);
+  color: var(--text);
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
+              background var(--dur) var(--ease);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--primary);
+  background: var(--surface);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--primary-light);
 }
 
 .form-textarea {
-  min-height: 80px;
+  min-height: 90px;
   resize: vertical;
 }
 
@@ -61,25 +85,36 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 20px;
-  padding-top: 15px;
-  border-top: 1px solid var(--border, #e0e0e0);
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
 }
 
 /* Sales Activity column wrap in table */
 #allSalesActivitiesTableBody td:nth-child(6) {
   white-space: pre-wrap;
   word-break: break-word;
-  max-width: 200px;
+  max-width: 220px;
 }
 
 /* Responsive */
 @media (max-width: 800px) {
-  .sales-activity-modal-content { padding: 15px; }
-  .form-row { gap: 10px; }
+  .sales-activity-modal-content {
+    padding: 20px 18px;
+    margin: 2vh auto;
+  }
+  .form-row { gap: 12px; }
 }
+
 @media (max-width: 500px) {
-  .sales-activity-modal-content { width: 90vw; padding: 12px; }
-  .form-input, .form-textarea { padding: 6px 8px; font-size: 13px; }
+  .sales-activity-modal-content {
+    width: 94vw;
+    padding: 16px 14px;
+  }
+  .form-input,
+  .form-textarea {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
   .form-textarea { min-height: 70px; }
 }
