@@ -327,7 +327,7 @@ a {
 .loan-table,
 .userlist-table,
 .call-report-table {
-  width: 100%;
+  width: 90%;
   border-collapse: separate;
   border-spacing: 0;
 }
