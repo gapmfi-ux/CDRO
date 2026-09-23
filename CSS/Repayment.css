@@ -2,7 +2,7 @@
    REPAYMENT STYLES
    ============================================================ */
 
-/* Right-align numeric columns in the repayment table */
+/* Right-align numeric columns */
 #repaymentContainer .call-report-table th:nth-child(5),
 #repaymentContainer .call-report-table th:nth-child(6),
 #repaymentContainer .call-report-table th:nth-child(7) {
@@ -14,34 +14,31 @@
 #repaymentContainer .call-report-table td:nth-child(7) {
   text-align: right;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Emphasize the Total Monthly Repayment column */
 #repaymentContainer .call-report-table td strong {
-  color: #1976d2;
+  color: var(--primary-dark);
   font-weight: 700;
 }
 
 /* Column widths for the 7-column repayment table */
 #repaymentContainer .call-report-table th:nth-child(1),
-#repaymentContainer .call-report-table td:nth-child(1) {
-  width: 22%; /* Customer Name */
-}
+#repaymentContainer .call-report-table td:nth-child(1) { width: 22%; }
 
 #repaymentContainer .call-report-table th:nth-child(2),
 #repaymentContainer .call-report-table td:nth-child(2) {
-  width: 15%; /* Account No. */
+  width: 15%;
   white-space: nowrap;
 }
 
 #repaymentContainer .call-report-table th:nth-child(3),
-#repaymentContainer .call-report-table td:nth-child(3) {
-  width: 14%; /* Loan Product */
-}
+#repaymentContainer .call-report-table td:nth-child(3) { width: 14%; }
 
 #repaymentContainer .call-report-table th:nth-child(4),
 #repaymentContainer .call-report-table td:nth-child(4) {
-  width: 13%; /* Next Payment Date */
+  width: 13%;
   white-space: nowrap;
 }
 
@@ -50,31 +47,29 @@
 #repaymentContainer .call-report-table th:nth-child(6),
 #repaymentContainer .call-report-table td:nth-child(6),
 #repaymentContainer .call-report-table th:nth-child(7),
-#repaymentContainer .call-report-table td:nth-child(7) {
-  width: 12%; /* Numeric columns */
-}
+#repaymentContainer .call-report-table td:nth-child(7) { width: 12%; }
 
 /* Zebra striping for readability */
 #repaymentContainer .call-report-table tbody tr:nth-child(even) {
-  background: #fafbfd;
+  background: var(--surface-2);
 }
 
 #repaymentContainer .call-report-table tbody tr:hover {
-  background: #eef5ff;
+  background: var(--primary-soft);
 }
 
 /* Highlight rows where next payment is within 3 days */
 #repaymentContainer .call-report-table tbody tr.urgent-payment {
-  background: #fff3e0;
+  background: var(--warning-light);
 }
 
 #repaymentContainer .call-report-table tbody tr.urgent-payment:hover {
-  background: #ffe0b2;
+  background: #fde9c8;
 }
 
 /* Filter bar specific tweaks */
 #repaymentContainer .filter-bar {
-  gap: 10px;
+  gap: 12px;
 }
 
 #repaymentContainer .filter-bar input[type="date"] {
@@ -85,13 +80,12 @@
   min-width: 170px;
 }
 
-/* Responsive: stack filter controls and hide less-critical columns on mobile */
+/* Responsive */
 @media (max-width: 900px) {
   #repaymentContainer .call-report-table th:nth-child(3),
   #repaymentContainer .call-report-table td:nth-child(3) {
     display: none; /* Loan Product */
   }
-
   #repaymentContainer .call-report-table th:nth-child(1),
   #repaymentContainer .call-report-table td:nth-child(1) {
     width: 28%;
@@ -101,21 +95,18 @@
 @media (max-width: 600px) {
   #repaymentContainer .call-report-table th,
   #repaymentContainer .call-report-table td {
-    font-size: 11px;
-    padding: 6px 6px;
+    font-size: 12px;
+    padding: 8px;
   }
-
   #repaymentContainer .call-report-table th:nth-child(2),
   #repaymentContainer .call-report-table td:nth-child(2) {
     display: none; /* Account No. */
   }
-
   #repaymentContainer .filter-bar {
     flex-direction: column;
     align-items: stretch;
     height: auto;
   }
-
   #repaymentContainer .filter-bar input,
   #repaymentContainer .filter-bar select,
   #repaymentContainer .filter-bar button {
